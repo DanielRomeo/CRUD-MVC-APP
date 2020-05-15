@@ -10,4 +10,10 @@ class Userscontroller extends Users {
 	public function updateUser($id, $firstname, $lastname, $dob, $language){
 		$this->setUpdateUser($id, $firstname, $lastname, $dob, $language);
 	}
+
+	public function removeUser($id){
+		$this->setDeleteUser($id);
+	}
+
+	
 }

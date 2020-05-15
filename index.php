@@ -1,4 +1,10 @@
 <?php
+// session code:
+// header('Content-type: application/json');
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
 
 	include_once('classes/views/usersview.class.php');
 	include_once('classes/controllers/userscontroller.class.php');
@@ -17,6 +23,27 @@
 		$newUser = new UsersController();
 		$newUser->createUser($firstname, $lastname, $dob, $language);
 	}
+
+	if(isset($_POST['delete'])){
+		$id = $_POST['id'];
+		
+		$newUser = "";
+		$newUser = new UsersController();
+		$newUser->removeUser($id);
+	}
+
+	if(isset($_POST['action']) ){
+		//echo "rasdfsdfsdfsdfsdfsdn";
+
+		$newUser = "";
+		$newUser = new UsersView();
+
+		//echo $language =  $_POST['action'];
+		echo $language;
+		echo $newUser->showNumberOfUsersPerLanguage($language);
+	}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +106,7 @@
 				  <div class="card-body text-primary">
 				    <h5 class="card-title">Show Statistics</h5>
 				    <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
-				
+					<canvas id="myChart"></canvas>
 				  </div>
 				</div>
 			</div>
@@ -93,18 +120,7 @@
 
 		<div class="row">
 			<?php
-
-				$testObj = new Usersview();
-				//$testObj->getUsers();
-
-				//$testObj->getUsersStmt('daniel', 'mamphekgo');
-				//$testObj->showUser('daniel');
-
-				//$testObj2 = new UsersController();
-				//$testObj2->createUser('lincoln', 'seemola', '1997-04-30');
-
-				//$testObj3 = new UsersController();
-				//$testObj3->updateUser('1', 'katlego', 'mashabela');
+			$testObj = new UsersView();
 				$testObj->showAllUsers();
 			?>
 		</div>
@@ -113,8 +129,66 @@
 	<!-- modal: -->
 	
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+    <script type="text/javascript">
+    	$(document).ready(function(){
+
+    		// make a post request to the views conttroller to get the languages data back:
+    		var myValues = [];
+
+    		//var AfrikaansData = getLanguageData('Afrikaans');
+    		getLanguageData('Afrikaans');
+    		// var EnglishData = getLanguageData('English');
+    		// var SepediData = getLanguageData('Sepedi');
+    		// var ZuluData = getLanguageData('Zulu');
+
+
+    		// get afrikaans data:
+    		function getLanguageData(language){
+    			//console.log("rrrrrran")
+    			$.ajax({
+    				
+				    type: 'POST',  
+				    data: { action: language }, 
+				    contentType: "application/json",
+					dataType: "json",
+				    success: function (data) {
+				        //myValues.push(data);
+				        console.log(data)
+				        myValues.push(data);
+				    }
+				});
+				// console.log(myValues);
+
+    		}
+    		console.log(myValues);
+    		
+
+	    	var ctx = document.getElementById('myChart').getContext('2d');
+			var chart = new Chart(ctx, {
+			    type: 'bar',
+
+			    data: {
+			        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			        datasets: [{
+			            label: 'My First dataset',
+			            backgroundColor: 'rgb(255, 99, 132)',
+			            borderColor: 'rgb(255, 99, 132)',
+			            data: [0, 10, 5, 2, 20, 30, 45]
+			        }]
+			    },
+
+			    options: {}
+			});
+    	});
+    	
+    </script>
 </body>
 </html>

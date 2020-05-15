@@ -14,6 +14,31 @@ class Users extends DB{
 		return $results;
 	}
 
+	// count number of users that have the language:
+	protected function getUsersOfLanguage($language){
+		$sql = "SELECT count(*) as total FROM users WHERE language = ? ";
+		$stmt = $this->connect()->prepare($sql);
+		$stmt->execute([$language]);
+		$results = $stmt->fetchAll();
+		return $results;
+	}
+
+	
+
+
+	/*end of gets -----------------------------------------------------------------------------------*/
+
+
+
+	// delete user
+	protected function setDeleteUser($id){
+		$sql = "DELETE FROM users WHERE id = ? ";
+		$stmt = $this->connect()->prepare($sql);
+		$stmt->execute([$id]);
+
+		echo "user has been deleted";
+	}
+
 	// get all uses:
 	protected function getUsers(){
 		$sql = "SELECT * FROM users";
@@ -38,6 +63,8 @@ class Users extends DB{
 		$stmt->execute([$firstname, $lastname, $dob, $language, $id]);
 		echo "User updated";
 	}
+
+
 
 
 }

@@ -13,6 +13,11 @@ class UsersView extends Users{
 	}
 
 
+	public function showNumberOfUsersPerLanguage($language){
+		$results = $this->getUsersOfLanguage($language);
+	}
+
+
 	// this function shows all users along with a modal attached at the end for editing the records
 	public function showAllUsers(){
 		$results = $this->getUsers();
@@ -22,9 +27,10 @@ class UsersView extends Users{
 			<table class='table table-dark'>
 				<thead>
 				<tr>
-					<th width='15%'>ID</th>
+					<th width='20%'>ID</th>
 					<th width='20%'>FIRSTNAME</th>
 					<th width='20%'>LASTNAME</th>
+					<th width='20%'>HOME_LANGUAGE</th>
 					<th width='10%'>UPDATE</th>
 					<th width='10%'>DELETE</th>
 				</tr>
@@ -38,12 +44,16 @@ class UsersView extends Users{
 					<td>".$row['id']."</td>
 					<td>".$row['firstname']."</td>
 					<td>".$row['lastname']."</td>
+					<td>".$row['language']."</td>
 					<td> 
 						<button data-target='#editModal".$row['id']."' data-toggle='modal' type='button' class='btn btn-warning'>Edit</button>
 					</td>
 
 					<td> 
-						<a class='btn btn-danger'>Delete</a>
+						<form action='".$_SERVER['PHP_SELF']."' method='POST'>
+							<input name='id' hidden value='".$row['id']."'/>
+							<button name='delete' type='submit' class='btn btn-danger'> Delete </button> </form>
+						</form>	
 					</td>			
 				</tr>
 
