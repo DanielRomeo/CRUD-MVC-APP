@@ -1,0 +1,7 @@
+html,body{
+
+}
+
+#insertCard, #submitButton, #statsCard{
+	border-radius: 0px;
+}

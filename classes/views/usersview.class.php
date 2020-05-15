@@ -17,34 +17,38 @@ class UsersView extends Users{
 		//echo json_encode($results);
 		$output = "";
 		$output  .="
-			<table >
+			<table class='table table-dark'>
+				<thead>
 				<tr>
-					<th width='15%'>id</th>
-					<th width='20%'>firstname</th>
-					<th width='20%'>lastname</th>
-					<th width='15%'>update</th>
-					<th width='15%'>delete</th>
+					<th width='15%'>ID</th>
+					<th width='20%'>FIRSTNAME</th>
+					<th width='20%'>LASTNAME</th>
+					<th width='10%'>UPDATE</th>
+					<th width='10%'>DELETE</th>
 				</tr>
+				</thead>
 		";
 
 		foreach ($results as $row) {
 			$output .= "
-			<tr>
-				<td>".$row['id']."</td>
-				<td>".$row['firstname']."</td>
-				<td>".$row['lastname']."</td>
-				<td> 
-					<a class='btn btn-warning'>Edit</a>
-				</td>
+			<tbody>
+				<tr>
+					<td>".$row['id']."</td>
+					<td>".$row['firstname']."</td>
+					<td>".$row['lastname']."</td>
+					<td> 
+						<a class='btn btn-warning'>Edit</a>
+					</td>
 
-				<td> 
-					<a class='btn btn-danger'>Delete</a>
-				</td>			
-			</tr>";
+					<td> 
+						<a class='btn btn-danger'>Delete</a>
+					</td>			
+				</tr>"
+			;
 		}
 		
 		
-		$output .= "</table>";
+		$output .= "</tbody> </table>";
 		echo $output;
 	}
 }

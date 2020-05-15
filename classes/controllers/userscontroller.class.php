@@ -3,11 +3,11 @@
 
 class Userscontroller extends Users {
 
-	public function createUser($firstname, $lastname, $dob){
-		$this->setUser($firstname, $lastname, $dob);
+	public function createUser($firstname, $lastname, $dob, $language){
+		$this->setUser($firstname, $lastname, $dob, $language);
 	}
 
-	public function updateUser($id, $firstname, $lastname){
-		$this->setUpdateUser($id, $firstname, $lastname);
+	public function updateUser($id, $firstname, $lastname, $dob, $language){
+		$this->setUpdateUser($id, $firstname, $lastname, $dob, $language);
 	}
 }

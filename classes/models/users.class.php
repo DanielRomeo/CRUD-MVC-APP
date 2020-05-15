@@ -25,17 +25,17 @@ class Users extends DB{
 	}
 
 	// create:
-	protected function setUser($firstname, $lastname, $dob){
-		$sql = "INSERT INTO users(firstname, lastname, dob) VALUES(?, ?, ?)";
+	protected function setUser($firstname, $lastname, $dob, $language){
+		$sql = "INSERT INTO users(firstname, lastname, dob, language) VALUES(?, ?, ?, ?)";
 		$stmt = $this->connect()->prepare($sql);
-		$stmt->execute([$firstname, $lastname, $dob]);
+		$stmt->execute([$firstname, $lastname, $dob, $language]);
 		echo "User created";
 	}
 
-	protected function setUpdateUser($id, $firstname, $lastname){
-		$sql = "UPDATE users SET firstname=?, lastname=? WHERE id=? " ;
+	protected function setUpdateUser($id, $firstname, $lastname, $dob, $language){
+		$sql = "UPDATE users SET firstname=?, lastname=?, dob=?, language=? WHERE id=? " ;
 		$stmt = $this->connect()->prepare($sql);
-		$stmt->execute([$firstname, $lastname, $id]);
+		$stmt->execute([$firstname, $lastname, $dob, $language, $id]);
 		echo "User updated";
 	}
 
