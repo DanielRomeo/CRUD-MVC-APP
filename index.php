@@ -11,18 +11,18 @@
 ?>
 
 <?php
-	if(isset($_POST['submit'])){
+	// if(isset($_POST['submit'])){
 
-		// get the valuse from fields:
-		$firstname 		= $_POST['firstname'];
-		$lastname 		= $_POST['lastname'];
-		$dob 			= $_POST['dob'];
-		$language 		= $_POST['language'];
+	// 	// get the valuse from fields:
+	// 	$firstname 		= $_POST['firstname'];
+	// 	$lastname 		= $_POST['lastname'];
+	// 	$dob 			= $_POST['dob'];
+	// 	$language 		= $_POST['language'];
 
-		$newUser = "";
-		$newUser = new UsersController();
-		$newUser->createUser($firstname, $lastname, $dob, $language);
-	}
+	// 	$newUser = "";
+	// 	$newUser = new UsersController();
+	// 	$newUser->createUser($firstname, $lastname, $dob, $language);
+	// }
 
 	if(isset($_POST['delete'])){
 		$id = $_POST['id'];
@@ -130,10 +130,16 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="input-group mb-3">
-					
-						<input id="search_text" name="search_text" type="text" class="form-control" placeholder="search by firstname" aria-label="" aria-describedby="basic-addon1">
-					
-					
+					<form id="myform" name="myform" class="">
+						<div class="input-group mb-3">
+
+							<input name="search_text" id="search_text" type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+							<div class="input-group-append">
+
+							<button type="submit" name="" class="btn btn-outline-secondary" type="button">Search</button>
+						  </div>
+						</div>
+					</form>
 				</div>
 			</div>
 			
@@ -170,10 +176,10 @@
 
     		
 			//search:
-			$('#search_text').keyup(function(e){
+			$('#myform').on('submit', (function(e){
 				e.preventDefault();
 				console.log("keyup");
-				var txt = $(this).val();
+				var txt = $('#search_text').val();
 				if(txt == ''){
 
 				}else{
@@ -189,13 +195,13 @@
 						}
 					});
 				}
-			});
+			}));
 
 
     		// make a post request to the views conttroller to get the languages data back:
     		var myValues = [];
     		//var AfrikaansData = getLanguageData('Afrikaans');
-    		getLanguageData('Afrikaans');
+    		//getLanguageData('Afrikaans');
     		// var EnglishData = getLanguageData('English');
     		// var SepediData = getLanguageData('Sepedi');
     		// var ZuluData = getLanguageData('Zulu');
