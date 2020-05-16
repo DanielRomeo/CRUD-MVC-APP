@@ -43,6 +43,19 @@
 		echo $newUser->showNumberOfUsersPerLanguage($language);
 	}
 
+	if(isset($_POST['search'])){
+		
+		$text = $_POST['search'];
+		echo "workded";
+	
+
+		$newSearch = "";
+		$newSearch = new UsersView();
+		$newSearch->search($text);
+	}
+	
+
+
 
 ?>
 
@@ -112,17 +125,31 @@
 			</div>
 		</div> <!-- end of row -->
 
-	
-
-
-
-
-
+		<hr/>
+		<!-- search row -->
 		<div class="row">
+			<div class="col-md-6">
+				<div class="input-group mb-3">
+					
+						<input id="search_text" name="search_text" type="text" class="form-control" placeholder="search by firstname" aria-label="" aria-describedby="basic-addon1">
+					
+					
+				</div>
+			</div>
+			
+		</div>
+
+
+
+		<div id="resultOriginal" class="row">
 			<?php
 			$testObj = new UsersView();
 				$testObj->showAllUsers();
 			?>
+		</div>
+
+		<div id="result" class="row">
+			
 		</div>
 	</div>
 
@@ -140,9 +167,33 @@
     <script type="text/javascript">
     	$(document).ready(function(){
 
+
+    		
+			//search:
+			$('#search_text').keyup(function(e){
+				e.preventDefault();
+				console.log("keyup");
+				var txt = $(this).val();
+				if(txt == ''){
+
+				}else{
+					$('#resultOriginal').html('');
+					$('#result').html('');
+					$.ajax({
+						url: "index.php",
+						method: "post",
+						data: {search:txt},
+						dataType: "text",
+						success: function(data){
+							$('#result').html(data);
+						}
+					});
+				}
+			});
+
+
     		// make a post request to the views conttroller to get the languages data back:
     		var myValues = [];
-
     		//var AfrikaansData = getLanguageData('Afrikaans');
     		getLanguageData('Afrikaans');
     		// var EnglishData = getLanguageData('English');
@@ -188,7 +239,12 @@
 			    options: {}
 			});
     	});
+
+    	 if ( window.history.replaceState ) {
+		        window.history.replaceState( null, null, window.location.href );
+		    }
     	
     </script>
+
 </body>
 </html>

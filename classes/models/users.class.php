@@ -23,6 +23,15 @@ class Users extends DB{
 		return $results;
 	}
 
+	// get users by search query:
+	protected function filterBySearch($text){
+		$sql = "SELECT * FROM users WHERE firstname LIKE '%dan%' ";
+		$stmt = $this->connect()->query($sql);
+		$stmt->execute();
+		$results = $stmt->fetchAll();
+		return $results;
+	}
+
 	
 
 
